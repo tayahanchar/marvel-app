@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+}
+
+.header_title {
+  color: #000;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.header_title__red {
+  color: #9F0013;
+}
+
+.header_navlist {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+}
+
+.active-page {
+  color: #9F0013;
+}
