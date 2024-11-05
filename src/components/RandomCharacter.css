@@ -14,6 +14,7 @@
 }
 
 .random-character_inf {
+  position: relative;
   width: 50%;
   padding: 35px;
   background-color: #232222;
@@ -65,30 +66,8 @@
   height: 180px;
 }
 
-.loader-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.decoration {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
-
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid;
-  border-color: #9F0013 transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
