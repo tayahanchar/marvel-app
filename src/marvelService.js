@@ -18,7 +18,6 @@ class MarvelService {
     const result = await this.getResourse(
       `https://gateway.marvel.com:443/v1/public/characters/${id}?${this._apiKey}`
     );
-
     return this.setCharacterData(result.data.results[0]);
   };
 
@@ -28,6 +27,8 @@ class MarvelService {
       description: result.description,
       img: `${result.thumbnail.path}.${result.thumbnail.extension}`,
       url: result.urls[0].url,
+      id: result.id,
+      comics: result.comics.items,
     };
   };
 }

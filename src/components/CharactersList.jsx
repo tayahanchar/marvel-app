@@ -6,8 +6,8 @@ import CharacterCard from "./CharacterCard";
 import './characterList.css';
 
 class CharactersList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       charactersList: {},
@@ -31,7 +31,7 @@ class CharactersList extends Component {
         <ul className="characters-list">
           {this.state.loading ? <Spinner /> : 
           this.state.error ? <Error /> :
-          this.state.charactersList.map(character => <CharacterCard key={character.name} {...character}></CharacterCard>)}
+          this.state.charactersList.map(character => <CharacterCard choseActiveCharacter={this.props.choseActiveCharacter} key={character.id} {...character}></CharacterCard>)}
         </ul>
         <button className="characters-list_button">LOAD MORE</button>
       </div>
