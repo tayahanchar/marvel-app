@@ -1,0 +1,26 @@
+.characters-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px 5px;
+}
+
+.characters-list_wrapper {
+  max-width: 700px;
+}
+
+.characters-list_button {
+  margin: 40px;
+  background-color: #9F0013;
+  color: #FFF;
+  font-size: 14px;
+  margin-right: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: none;
+}
+
+.characters-list_button:hover {
+  cursor: pointer;
+}

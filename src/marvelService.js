@@ -8,7 +8,7 @@ class MarvelService {
 
   getAllCharacters = async () => {
     const result = await this.getResourse(
-      `https://gateway.marvel.com:443/v1/public/characters?limit=9&offset=600&${this._apiKey}`
+      `https://gateway.marvel.com:443/v1/public/characters?limit=9&offset=685&${this._apiKey}`
     );
 
     return result.data.results.map((item) => this.setCharacterData(item));

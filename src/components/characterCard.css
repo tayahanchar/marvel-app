@@ -1,0 +1,17 @@
+.character-card {
+  width: 200px;
+  height: 320px;
+  background-color: #232222;
+  color: #FFF;
+  box-shadow: 5px 5px 10px 0px #00000040;
+}
+
+.character-card_img {
+  width: 200px;
+  height: 200px;
+}
+
+.character-card_name {
+  padding: 15px 0px;
+  text-align: center;
+}

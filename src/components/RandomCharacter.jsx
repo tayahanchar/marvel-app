@@ -39,8 +39,6 @@ class RandomCharacter extends Component {
         this.setState({error: error})
         this.setState({loading: false})
       })
-
-    // this.newMarvelService.getAllCharacters().then(res => console.log(res))
   }
   
   reloadCharacter = () => {
