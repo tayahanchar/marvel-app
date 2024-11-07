@@ -12,7 +12,8 @@ class CharactersList extends Component {
     this.state = {
       charactersList: {},
       loading: true,
-      error: null
+      error: null,
+      offset: 10
     }
   }
 
@@ -25,6 +26,19 @@ class CharactersList extends Component {
     }).catch((error) => this.setState({error: error, loading: false}))
   }
 
+  loadMoreCharacters = () => {
+    this.setState((prev) => {
+      return {offset: prev.offset + 9}
+    })
+    this.newMarvelService.getAllCharacters(this.state.offset).then(res => {
+      this.setState((prev) => {
+        console.log([...prev.charactersList, ...res])
+        return {charactersList: [...prev.charactersList, ...res]}
+      });
+      this.setState({loading: false});
+    }).catch((error) => this.setState({error: error, loading: false}))
+  }
+
   render() {
     return(
       <div className="characters-list_wrapper">
@@ -33,7 +47,7 @@ class CharactersList extends Component {
           this.state.error ? <Error /> :
           this.state.charactersList.map(character => <CharacterCard choseActiveCharacter={this.props.choseActiveCharacter} key={character.id} {...character}></CharacterCard>)}
         </ul>
-        <button className="characters-list_button">LOAD MORE</button>
+        {this.state.offset < 1564 && <button onClick={this.loadMoreCharacters} className="characters-list_button">LOAD MORE</button>}
       </div>
     )
   }
