@@ -1,7 +1,17 @@
 import { Component } from 'react';
 import './activeCharacter.css';
+import PropTypes from 'prop-types';
 
 class ActiveCharacter extends Component {
+
+  static propTypes = {
+    name: PropTypes.string,
+    img: PropTypes.string,
+    description: PropTypes.string,
+    comics: PropTypes.array
+  }
+
+
   constructor(props) {
     super(props)
   }

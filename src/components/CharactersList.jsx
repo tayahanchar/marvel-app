@@ -4,13 +4,19 @@ import Spinner from './Spinner';
 import Error from './Error';
 import CharacterCard from "./CharacterCard";
 import './characterList.css';
+import PropTypes from 'prop-types';
 
 class CharactersList extends Component {
+
+  static propTypes = {
+    choseActiveCharacter: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      charactersList: {},
+      charactersList: null,
       loading: true,
       error: null,
       offset: 10
@@ -32,7 +38,6 @@ class CharactersList extends Component {
     })
     this.newMarvelService.getAllCharacters(this.state.offset).then(res => {
       this.setState((prev) => {
-        console.log([...prev.charactersList, ...res])
         return {charactersList: [...prev.charactersList, ...res]}
       });
       this.setState({loading: false});
