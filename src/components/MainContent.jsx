@@ -1,47 +1,38 @@
-
-import { Component } from 'react';
 import ActiveCharacter from './ActiveCharacter';
 import CharactersList from './CharactersList';
 import './mainContent.css';
 import SelectCharacter from './SelectCharacter';
 import MarvelService from '../marvelService';
 import Error from './Error';
+import { useState } from 'react';
 
-class MainContent extends Component {
 
-  constructor() {
-    super();
+function MainContent() {
 
-    this.state = {
-      mainCharacterId: null,
-      character: {},
-      error: false,
-    }
-  }
+  const [mainCharacterId, setMainCharacterId] = useState(null);
+  const [character, setCharacter] = useState({});
+  const [error, setError] = useState(false);
 
-  newMarvelService = new MarvelService();
+  const newMarvelService = new MarvelService();
 
-  choseActiveCharacter = (id) => {
-    this.newMarvelService.getOneCharacterByID(id)
+  const choseActiveCharacter = (id) => {
+    newMarvelService.getOneCharacterByID(id)
     .then(result => {
-      this.setState({mainCharacterId: id});
-      this.setState({character: result});
-    }).catch((error) => this.setState({error: error}))
+      setMainCharacterId(id)
+      setCharacter(result)
+    }).catch((error) => setError(error))
   }
 
-  render() {
     return (
       <div className='main-content'>
-          <CharactersList choseActiveCharacter={this.choseActiveCharacter} />
-          { this.state.mainCharacterId ?
-            <ActiveCharacter {...this.state.character} error={this.state.error} /> :
-            this.state.error ?
+          <CharactersList choseActiveCharacter={choseActiveCharacter} />
+          { mainCharacterId ?
+            <ActiveCharacter {...character} error={error} /> :
+            error ?
             <Error /> :
             <SelectCharacter />
           }
       </div>
     )
-  }
-
 }
 export default MainContent;

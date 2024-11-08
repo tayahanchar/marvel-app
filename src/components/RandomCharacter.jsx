@@ -1,8 +1,8 @@
 import './RandomCharacter.css';
 import MarvelService from '../marvelService';
-import { Component } from 'react';
 import Spinner from './Spinner';
 import Error from './Error';
+import { useEffect, useState } from 'react';
 
 function getRandomIntInclusive(min, max) {
   const minCeiled = Math.ceil(min);
@@ -10,61 +10,51 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
 
-class RandomCharacter extends Component {
+function RandomCharacter() {
 
-  constructor() {
-    super();
-    this.state = {
-      character: {},
-      error: null,
-      loading: true
-    }
-  }
+  const [character, setCharacter] = useState({})
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const newMarvelService = new MarvelService();
 
-  componentDidMount() {
-    this.setCharacterData();
-  }
+  useEffect(() => {
+    setCharacterData();
+  }, [])
 
-  newMarvelService = new MarvelService();
-
-  setCharacterData = () => {
+  const setCharacterData = () => {
     const randomCharacterId = getRandomIntInclusive(1011400, 1011000);
 
-    this.newMarvelService.getOneCharacterByID(randomCharacterId)
+    newMarvelService.getOneCharacterByID(randomCharacterId)
       .then(res => {
-        this.setState({character: res});
-        this.setState({loading: false})
+        setCharacter(res);
+        setLoading(false)
       })
       .catch(error => {
-        this.setState({error: error})
-        this.setState({loading: false})
+        setLoading(false);
+        setError(error);
       })
   }
   
-  reloadCharacter = () => {
-    this.setState({
-      character: {},
-      error: null,
-      loading: true
-    });
-    this.setCharacterData();
+  const reloadCharacter = () => {
+    setError(null);
+    setLoading(true)
+    setCharacterData();
   }
 
-  render() {
     return (
       <div className="random-character_container">
         <div className='random-character'>
           {
-            this.state.loading ? 
+            loading ? 
             <Spinner /> : 
-            this.state.error ? 
+            error ? 
             <Error /> :
             <>
-              <img className='random-character_img' src={this.state.character.img} alt="character" />
+              <img className='random-character_img' src={character.img} alt="character" />
               <div className='random-character_descr'>
-              <h2 className='random-character_title'>{this.state.character.name}</h2>
-              <p className='random-character_p'>{this.state.character.description}</p>
-                <button className='random-character_button'><a href={this.state.character.url} target='_blank'>HOMEPAGE</a></button>
+              <h2 className='random-character_title'>{character.name}</h2>
+              <p className='random-character_p'>{character.description}</p>
+                <button className='random-character_button'><a href={character.url} target='_blank'>HOMEPAGE</a></button>
               </div> 
             </> 
           }
@@ -76,13 +66,11 @@ class RandomCharacter extends Component {
             <p>Do you want to get to know him better?</p>
           </div>
           <p>Or choose another one</p>
-          <button onClick={this.reloadCharacter} className='random-character_button'>TRY IT</button>
+          <button onClick={reloadCharacter} className='random-character_button'>TRY IT</button>
           <img className='decoration' src="../../public/Decoration.png" alt="decoration" />
         </div>
       </div>
     )
-  }
-  
 }
 
 export default RandomCharacter;

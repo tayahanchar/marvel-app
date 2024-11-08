@@ -1,61 +1,56 @@
-import { Component } from "react";
 import MarvelService from '../marvelService';
 import Spinner from './Spinner';
 import Error from './Error';
 import CharacterCard from "./CharacterCard";
 import './characterList.css';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-class CharactersList extends Component {
+function CharactersList(props) {
+  
+  const [charactersList, setCharactersList] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [offset, setOffset] = useState(10);
 
-  static propTypes = {
-    choseActiveCharacter: PropTypes.func.isRequired
-  }
 
-  constructor(props) {
-    super(props);
+  const newMarvelService = new MarvelService();
 
-    this.state = {
-      charactersList: null,
-      loading: true,
-      error: null,
-      offset: 10
-    }
-  }
-
-  newMarvelService = new MarvelService();
-
-  componentDidMount() {
-    this.newMarvelService.getAllCharacters().then(res => {
-      this.setState({charactersList: res});
-      this.setState({loading: false});
-    }).catch((error) => this.setState({error: error, loading: false}))
-  }
-
-  loadMoreCharacters = () => {
-    this.setState((prev) => {
-      return {offset: prev.offset + 9}
+  useEffect(() => {
+    newMarvelService.getAllCharacters().then(res => {
+      setCharactersList(res)
+      setLoading(false)
+    }).catch((error) => {
+      setError(error);
+      setLoading(false)
     })
-    this.newMarvelService.getAllCharacters(this.state.offset).then(res => {
-      this.setState((prev) => {
-        return {charactersList: [...prev.charactersList, ...res]}
-      });
-      this.setState({loading: false});
-    }).catch((error) => this.setState({error: error, loading: false}))
+  }, [])
+
+  const loadMoreCharacters = () => {
+    setOffset((prev) => prev + 9);
+    newMarvelService.getAllCharacters(offset).then(res => {
+      setCharactersList((prev) => [...prev, ...res])
+      setLoading(false)
+    }).catch((error) => {
+      setError(error);
+      setLoading(false)
+    })
   }
 
-  render() {
     return(
       <div className="characters-list_wrapper">
         <ul className="characters-list">
-          {this.state.loading ? <Spinner /> : 
-          this.state.error ? <Error /> :
-          this.state.charactersList.map(character => <CharacterCard choseActiveCharacter={this.props.choseActiveCharacter} key={character.id} {...character}></CharacterCard>)}
+          {loading ? <Spinner /> : 
+          error ? <Error /> :
+          charactersList.map(character => <CharacterCard choseActiveCharacter={props.choseActiveCharacter} key={character.id} {...character}></CharacterCard>)}
         </ul>
-        {this.state.offset < 1564 && <button onClick={this.loadMoreCharacters} className="characters-list_button">LOAD MORE</button>}
+        {offset < 1564 && <button onClick={loadMoreCharacters} className="characters-list_button">LOAD MORE</button>}
       </div>
     )
-  }
 }
+
+CharactersList.propTypes = {
+    choseActiveCharacter: PropTypes.func.isRequired
+  }
 
 export default CharactersList;
