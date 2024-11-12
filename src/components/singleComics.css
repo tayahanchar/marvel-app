@@ -1,0 +1,23 @@
+.single-comics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 70px;
+  font-size: 26px;
+  text-align: left;
+}
+
+.single-comics_img {
+  height: 450px;
+}
+
+.single-comics_content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.single-comics_link {
+  min-width: 150px;
+}

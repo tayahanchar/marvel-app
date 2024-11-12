@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import ComicsPage from './components/ComicsPage';
+import ComicsMainPage from './components/ComicsMainPage';
 import MainPage from './components/MainPage';
 import Page from './components/Page';
 import NotFound from './components/NotFound';
+import SingleComics from './components/SingleComics';
+import ComicsPage from './components/ComicsPage';
 
 function App() {
 
@@ -12,8 +14,12 @@ function App() {
         <Routes>
           <Route path='/' element={<Page />}>
             <Route index element={<MainPage />} />
-            <Route path='comics' element={<ComicsPage />} />
             <Route path='*' element={<NotFound />} />
+            <Route path='comics' element={<ComicsMainPage />}>
+              <Route index element={<ComicsPage />}></Route>
+              <Route path=':id' element={<SingleComics />}></Route>
+              <Route path='*' element={<NotFound />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

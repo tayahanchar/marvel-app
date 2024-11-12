@@ -29,6 +29,13 @@ class MarvelService {
     return result.data.results.map((item) => this.setComicsData(item));
   };
 
+  getOneComicsByID = async (id) => {
+    const result = await this.getResourse(
+      `https://gateway.marvel.com:443/v1/public/comics/${id}?${this._apiKey}`
+    );
+    return this.setComicsData(result.data.results[0]);
+  };
+
   setComicsData = (result) => {
     return {
       title: result.title,

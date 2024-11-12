@@ -3,7 +3,7 @@ import MarvelService from '../marvelService';
 import './comicsPage.css';
 import Spinner from './Spinner';
 import Error from './Error';
-
+import { useNavigate } from 'react-router-dom';
 
 function ComicsPage() {
   const newService = new MarvelService;
@@ -11,6 +11,8 @@ function ComicsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [offset, setOffset] = useState(10);
+  const [newNav, setNewNav] = useState(false);
+  const changeLocation = useNavigate();
 
   useEffect(() => {
     newService.getAllComics()
@@ -23,6 +25,10 @@ function ComicsPage() {
       setLoading(false);
     })
   }, []);
+
+  useEffect(() => {
+    changeLocation(newNav, {relative: 'path'})
+  }, [newNav])
 
   const openMoreComics = () => {
     setLoading(true)
@@ -37,23 +43,18 @@ function ComicsPage() {
     })
   }
 
+  const openSingleComics = (event) => {
+    setNewNav(event.target.closest('.comics-page-item').dataset.id)
+  }
+
   return (
     <div>
-      <div className='comics_poster'>
-        <img src="../../public/Avengers.png" alt="avengers" />
-        <div>
-          <p>New comics every week!</p>
-          <p>Stay tuned!</p>
-        </div>
-        <img src="../../public/Avengers-logo.png" alt="avengers" />
-      </div>
-
       { error ? <Error /> :
       <>
-        <ul className='comics-page-list'>
+        <ul onClick={(e) => openSingleComics(e)} className='comics-page-list'>
           {comicsList.map((comics, i) => {
             return (
-              <li className='comics-page-item' key={comics.id + i}>
+              <li className='comics-page-item' key={comics.id + i} data-id={comics.id}>
                 <img className='comics-item_img' src={comics.img} alt="comics" />
                 <h4 className='comics_title'>{comics.title}</h4>
                 <p>{comics.price? `${comics.price}$` : 'not available'}</p>
