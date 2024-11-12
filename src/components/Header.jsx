@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './Header.css';
 
 function Header() {
@@ -6,11 +7,11 @@ function Header() {
     <header className='header'>
       <h1 className='header_title'><span className='header_title__red'>Marvel</span> information portal</h1>
       <nav>
-        <ul className='header_navlist'>
-          <li className='active-page'>Characters</li>
+        <div className='header_navlist'>
+          <NavLink to='.' end className={({isActive}) => isActive ? 'active-page' : null}>Characters</NavLink>
           <span> / </span>
-          <li>Comics</li>
-        </ul>
+          <NavLink to='comics' className={({isActive}) => isActive ? 'active-page' : null}>Comics</NavLink>
+        </div>
       </nav>
     </header>
   )

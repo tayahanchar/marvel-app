@@ -23,7 +23,7 @@ class MarvelService {
 
   getAllComics = async (offset = 0) => {
     const result = await this.getResourse(
-      `https://gateway.marvel.com:443/v1/public/comics?limit=12&offset=${offset}&${this._apiKey}`
+      `https://gateway.marvel.com:443/v1/public/comics?limit=10&offset=${offset}&${this._apiKey}`
     );
 
     return result.data.results.map((item) => this.setComicsData(item));

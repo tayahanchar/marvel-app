@@ -10,7 +10,7 @@ function ComicsPage() {
   const [comicsList, setComicsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [offset, setOffset] = useState(12);
+  const [offset, setOffset] = useState(10);
 
   useEffect(() => {
     newService.getAllComics()
@@ -30,7 +30,7 @@ function ComicsPage() {
     .then(res =>{
       setComicsList(prev => [...prev, ...res]);
       setLoading(false);
-      setOffset((prev) => prev + 12)
+      setOffset((prev) => prev + 10)
     })
     .catch(error => {
       setError(error);
@@ -53,7 +53,7 @@ function ComicsPage() {
         <ul className='comics-page-list'>
           {comicsList.map((comics, i) => {
             return (
-              <li className='comics-item' key={comics.id + i}>
+              <li className='comics-page-item' key={comics.id + i}>
                 <img className='comics-item_img' src={comics.img} alt="comics" />
                 <h4 className='comics_title'>{comics.title}</h4>
                 <p>{comics.price? `${comics.price}$` : 'not available'}</p>
