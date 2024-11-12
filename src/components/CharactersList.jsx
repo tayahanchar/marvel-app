@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 function CharactersList(props) {
   
-  const [charactersList, setCharactersList] = useState(null);
+  const [charactersList, setCharactersList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(10);
@@ -28,23 +28,25 @@ function CharactersList(props) {
 
   const loadMoreCharacters = () => {
     setOffset((prev) => prev + 9);
+    setLoading(true);
     newMarvelService.getAllCharacters(offset).then(res => {
       setCharactersList((prev) => [...prev, ...res])
-      setLoading(false)
+      setLoading(false);
     }).catch((error) => {
       setError(error);
-      setLoading(false)
+      setLoading(false);
     })
   }
 
     return(
       <div className="characters-list_wrapper">
         <ul className="characters-list">
-          {loading ? <Spinner /> : 
+          { 
           error ? <Error /> :
           charactersList.map(character => <CharacterCard choseActiveCharacter={props.choseActiveCharacter} key={character.id} {...character}></CharacterCard>)}
         </ul>
-        {offset < 1564 && <button onClick={loadMoreCharacters} className="characters-list_button">LOAD MORE</button>}
+        { loading ? <Spinner /> :
+        offset < 1564 && <button onClick={loadMoreCharacters} className="characters-list_button">LOAD MORE</button>}
       </div>
     )
 }

@@ -21,6 +21,25 @@ class MarvelService {
     return this.setCharacterData(result.data.results[0]);
   };
 
+  getAllComics = async (offset = 0) => {
+    const result = await this.getResourse(
+      `https://gateway.marvel.com:443/v1/public/comics?limit=12&offset=${offset}&${this._apiKey}`
+    );
+
+    return result.data.results.map((item) => this.setComicsData(item));
+  };
+
+  setComicsData = (result) => {
+    return {
+      title: result.title,
+      id: result.id,
+      description: result.description,
+      img: `${result.thumbnail.path}.${result.thumbnail.extension}`,
+      url: result.urls[0].url,
+      price: result.prices[0].price,
+    };
+  };
+
   setCharacterData = (result) => {
     return {
       name: result.name,

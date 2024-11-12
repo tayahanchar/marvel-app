@@ -26,6 +26,7 @@
   box-shadow: 5px 5px 20px 0px #00000040;
   height: 415px;
   width: 225px;
+  cursor: pointer;
 }
 
 .comics-item_img {
@@ -43,4 +44,10 @@
 
 .comics_button:hover {
   cursor: pointer;
+}
+
+.comics_title {
+  height: 40px;
+  overflow: hidden;
+  margin-bottom: 7px;
 }
