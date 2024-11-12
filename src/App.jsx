@@ -1,13 +1,15 @@
 import './App.css'
+import ComicsPage from './components/ComicsPage'
 import Header from './components/Header'
-import Main from './components/Main'
+import MainPage from './components/MainPage'
 
 function App() {
 
   return (
       <>
         <Header />
-        <Main />
+        {/* <MainPage /> */}
+        <ComicsPage />
       </>
   )
 }
